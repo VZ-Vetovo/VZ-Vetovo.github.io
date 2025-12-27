@@ -25,7 +25,7 @@ const allTempl = (data, tax, price) => html`
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="6">* Сумите са формирани от такса - ${tax.toFixed(2)}лв + цена за кВт - ${price}лв.</th>
+                                    <th colspan="6">* Сумите са формирани от такса - ${tax.toFixed(2)}лв/${toEuro(tax)}€ + цена за кВт - ${price}лв/${toEuro(price)}€.</th>
                                 </tr>
                                 <tr>
                                     <th></th>
@@ -69,9 +69,18 @@ const card = (item, tax, price) => html`
         <p>${Number(item.new) - Number(item.old)}</p>
     </td>
     <td>
-        <p>${((Number(item.new) - Number(item.old)) * price + tax).toFixed(2)}</p>
+        <p>${getBill(item.new, item.old, price, tax).toFixed(2)}лв/${toEuro(getBill(item.new, item.old, price, tax))}€</p>
     </td>
 </tr>`}`;
+
+function toEuro(value) {
+    const fixing = 1.95583;
+    return (value / fixing).toFixed(2);
+}
+
+function getBill(newInd, oldInd, price, tax) {
+    return (Number(newInd) - Number(oldInd)) * price + tax;
+}
 
 export async function unitsPage(ctx) {
     ctx.render(loader());
