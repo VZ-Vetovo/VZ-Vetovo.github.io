@@ -34,12 +34,12 @@ const editTempl = (data, onSave, onNew, onExport, onDelete, kilowats, momentSum,
                                 <tr>
                                     <th></th>
                                     <th>Наличнoст КАСА:</th>
-                                    <th>${momentSum.toFixed(2)}лв.</th>
+                                    <th>${momentSum.toFixed(2)}лв/${toEuro(momentSum)}€</th>
                                     <th></th>
                                     <th></th>
                                     <th>Общо:</th>
                                     <th>${kilowats}кВ</th>
-                                    <th>${totalSum.toFixed(2)}лв.</th>
+                                    <th>${totalSum.toFixed(2)}лв/${toEuro(totalSum)}€</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -79,8 +79,8 @@ const card = (item, tax, price) => html`
     </td>
     <td>
         ${item.elN == '99'
-            ? ((Number(item.new) - Number(item.old)) * price).toFixed(2)
-            : ((Number(item.new) - Number(item.old)) * price + tax).toFixed(2)}
+            ? getBill(item.new, item.old, price, 0).toFixed(2) + 'лв/' + toEuro(getBill(item.new, item.old, price, 0)) + '€'
+            : getBill(item.new, item.old, price, tax).toFixed(2) + 'лв/' + toEuro(getBill(item.new, item.old, price, tax)) + '€'}
     </td>
     <td>
         ${item.paid
@@ -89,6 +89,15 @@ const card = (item, tax, price) => html`
         
     </td>
 </tr>`;
+
+function toEuro(value) {
+    const fixing = 1.95583;
+    return (value / fixing).toFixed(2);
+}
+
+function getBill(newInd, oldInd, price, tax) {
+    return (Number(newInd) - Number(oldInd)) * price + tax;
+}
 
 export async function editPage(ctx) {
     ctx.render(loader());
