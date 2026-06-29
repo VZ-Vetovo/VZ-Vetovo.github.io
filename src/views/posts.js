@@ -2,23 +2,21 @@ import { delPost, getPosts, getUserData, loader, newPost } from "../apiData/data
 import { html } from "../lib.js";
 
 const postTempl = (posts, onPub, onDelete, admin) => html`
-<div id="container">
-    <div id="exercise">
-        <h1>ОБЯВИ, МНЕНИЯ и КОМЕНТАРИ.</h1>
-        <div class="wrapper">
-            <div class="card-wrapper">
-                <p>Текст: 
-                    <input id="content" class="post"/>
-                </p>
-                <p>Автор: 
-                    <input id="author"/>
-                </p>
-                <button @click=${onPub}>Публикувай</button>
-            </div>
-            ${posts.length == 0
-                ? html`Въведете първият коментар!`
-                : posts.map(i => card(i, onDelete, admin))}
+<div id="exercise">
+    <div class="wrapper">
+        <div class="card-wrapper">
+            <h1>Обяви, Мнения и Коментари.</h1>
+            <p>Текст: 
+                <input id="content" class="post"/>
+            </p>
+            <p>Автор: 
+                <input id="author" class="author"/>
+            </p>
+            <button @click=${onPub}>Публикувай</button>
         </div>
+        ${posts.length == 0
+            ? html`Въведете първият коментар!`
+            : posts.map(i => card(i, onDelete, admin))}
     </div>
 </div>`;
 

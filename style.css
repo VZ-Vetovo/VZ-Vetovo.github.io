@@ -8,20 +8,24 @@ body {
   background: #eaeaea;
   text-align: center;
   font-size: 20px;
+  font-style: italic;
   width: auto;
   margin: auto;
 }
 
 #exercise {
   display: inline-block;
-  padding: 1rem 0 1rem 1rem;
 }
 
 header {
-  padding: 32px;
+  padding: 16px;
   background-color: #cccccc;
-  position: relative;
+  position: fixed;
+  left: 0;
+  right: 0;
   display: flex;
+  z-index: 100;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px;
 }
 
 h1 {
@@ -31,8 +35,10 @@ h1 {
 }
 
 main {
-  background-color: #b4b0b0;
   padding: 32px;
+}
+.img-box {
+  margin-top: 72px;
 }
 
 nav {
@@ -51,7 +57,6 @@ nav a {
   background: #234465;
   color: white;
   padding: 8px 16px;
-  margin: 0 8px;
   text-decoration: none;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px;
@@ -63,22 +68,23 @@ nav a:hover {
 }
 
 a.active {
-  background-color: #70dfcc;
+  background-color: #449285;
   color: white;
 }
 
 .wrapper {
   width: 100%;
   max-width: auto;
-  margin: 48px auto;
+  margin: auto;
 }
 
 .card-wrapper {
-  border-radius: 2px;
-  padding: 24px;
-  background: white;
+  border-radius: 16px;
+  padding: 16px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px;
+  margin-top: 64px;
   margin-bottom: 48px;
+  background: #dddddd;
 }
 
 .wrapper table {
@@ -101,7 +107,6 @@ a.active {
   background: #234465;
   color: white;
   border: none;
-  height: 5vh;
   border-radius: 10px;
   font-weight: bold;
   margin: 20px auto;
@@ -206,11 +211,11 @@ span{
 }
 
 .paid{
-  background: #58ebbe;
+  background: #aed7ca;
 }
 
 .unpaid{
-  background: #d693c0;
+  background: #f2d8ea;
 }
 
 .elN{
@@ -232,7 +237,12 @@ span{
 .post{
   width: 700px;
   margin: 10px;
-  font-size: 20px;
+  font-size: 1.5rem;
+}
+
+.author{
+  margin: 10px;
+  font-size: 1.5rem;
 }
 
 .footer {
@@ -270,9 +280,11 @@ select {
 .lds-spinner {
   color: official;
   display: inline-block;
-  position: relative;
+  position: fixed;
+  top: 400px;
   width: 80px;
   height: 80px;
+  z-index: 200;
 }
 .lds-spinner div {
   transform-origin: 40px 40px;
@@ -287,7 +299,7 @@ select {
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #fff;
+  background: #234465;
 }
 
 .lds-spinner div:nth-child(1) {

@@ -3,19 +3,17 @@ import { html } from "../lib.js";
 
 
 const loginTempl = (onSubmit) => html`
-<div id="container">
-    <div id="exercise">
-        <div class="wrapper">
-            <div class="card-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Вход</h2>
-                        <form @submit=${onSubmit} action="/login" method="post">
-                            <label>Потребител: <input type="text" name="username"></label>
-                            <label>Парола: <input type="password" name="password"></label>
-                            <button>Вход</button>
-                        </form>
-                    </div>
+<div id="exercise">
+    <div class="wrapper">
+        <div class="card-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Вход</h2>
+                    <form @submit=${onSubmit} action="/login" method="post">
+                        <label>Потребител: <input type="text" name="username"></label>
+                        <label>Парола: <input type="password" name="password"></label>
+                        <button>Вход</button>
+                    </form>
                 </div>
             </div>
         </div>

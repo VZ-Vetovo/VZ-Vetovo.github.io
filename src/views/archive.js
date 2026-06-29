@@ -2,24 +2,22 @@ import { getAllIndications, loader } from "../apiData/data.js";
 import { html } from "../lib.js";
 
 const choiseTempl = (ind, onShow) => html`
-<div id="container">
-    <div id="exercise">
-        <div class="wrapper">
-            <div class="card-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                    <label class="arch" for="inter">Архив от дата:</label>
-                        ${ind.length > 0
-                            ? html`<select name="inter" id="inter">
-                                       ${ind.map(card)}
-                                   </select>
-                                   <button @click=${onShow}>Покажи</button>`
-                            : html`<p>Няма данни!</p>`}
-                    </div>
+<div id="exercise">
+    <div class="wrapper">
+        <div class="card-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                <label class="arch" for="inter">Архив от дата:</label>
+                    ${ind.length > 0
+                        ? html`<select name="inter" id="inter">
+                                    ${ind.map(card)}
+                                </select>
+                                <button @click=${onShow}>Покажи</button>`
+                        : html`<p>Няма данни!</p>`}
                 </div>
             </div>
-            <div class="arch-data"></div>
         </div>
+        <div class="arch-data"></div>
     </div>
 </div>`;
 

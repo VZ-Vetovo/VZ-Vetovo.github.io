@@ -3,51 +3,48 @@ import { html, render } from "../lib.js";
 import { download, toCsv } from "./download.js";
 
 const editTempl = (data, onSave, onNew, onExport, onDelete, kilowats, momentSum, totalSum, tax, price) => html`
-<div id="container">
-    <div id="exercise">
-        <h1>Корекции за: ${data.createdAt.split('T')[0]}</h1>
-
-        <div class="wrapper">
-            <div class="card-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Ел.№</th>
-                                    <th>Потребител</th>
-                                    <th>Тел.№</th>
-                                    <th>Бележка</th>
-                                    <th>Старо</th>
-                                    <th>Ново</th>
-                                    <th>Разлика</th>
-                                    <th>Сума</th>
-                                    <th>Платено</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                ${Object.values(data.units).map(u => card(u, tax, price))}
-                                <div></div>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Наличнoст КАСА:</th>
-                                    <th>${momentSum.toFixed(2)}лв/${toEuro(momentSum)}€</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Общо:</th>
-                                    <th>${kilowats}кВ</th>
-                                    <th>${totalSum.toFixed(2)}лв/${toEuro(totalSum)}€</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <button @click=${onSave}>Запази Промените</button>
-                        <button @click=${onNew}>Добави нов абонат</button>
-                        <button @click=${onDelete}>Итрий абонат № <input id='del-user'/></button>
-                        <button @click=${onExport}>Свали Данни</button>
-                    </div>
+<div id="exercise">
+    <div class="wrapper">
+        <div class="card-wrapper">
+            <h1>Корекции за: ${data.createdAt.split('T')[0]}</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ел.№</th>
+                                <th>Потребител</th>
+                                <th>Тел.№</th>
+                                <th>Бележка</th>
+                                <th>Старо</th>
+                                <th>Ново</th>
+                                <th>Разлика</th>
+                                <th>Сума</th>
+                                <th>Платено</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            ${Object.values(data.units).map(u => card(u, tax, price))}
+                            <div></div>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Наличнoст КАСА:</th>
+                                <th>${momentSum.toFixed(2)}лв/${toEuro(momentSum)}€</th>
+                                <th></th>
+                                <th></th>
+                                <th>Общо:</th>
+                                <th>${kilowats}кВ</th>
+                                <th>${totalSum.toFixed(2)}лв/${toEuro(totalSum)}€</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <button @click=${onSave}>Запази Промените</button>
+                    <button @click=${onNew}>Добави нов абонат</button>
+                    <button @click=${onDelete}>Итрий абонат № <input id='del-user'/></button>
+                    <button @click=${onExport}>Свали Данни</button>
                 </div>
             </div>
         </div>
@@ -126,10 +123,20 @@ export async function editPage(ctx) {
 
     ctx.render(editTempl(data, onSave, onNew, onExport, onDelete, kilowats, momentSum, totalSum, tax, price));
 
+    function uniqueElCheck(nums) {
+        if (nums.some(el => !el)) return false;
+        return new Set(nums).size === nums.length;
+    }
+
     async function onSave() {
         const rows = document.querySelectorAll('tbody tr');
         const newdata = {
             units: {}
+        }
+        const nums = [...document.querySelectorAll('.elN')].map(el =>el.value);
+        if (!uniqueElCheck(nums)) {
+            alert(`Празен или дублиран номер на електомер!`);
+            return;
         }
         rows.forEach(r => {
             const vals = r.querySelectorAll('input');
@@ -139,10 +146,10 @@ export async function editPage(ctx) {
             vals.forEach(v => {
                 newdata.units[num][v.className] = v.value
             })
-        })
+        });
         ctx.render(loader());
         await updateThisIndication(newdata, data.objectId);
-        ctx.page.redirect(`/indications`);
+        ctx.page.redirect(`/indications`); 
     }
 
     function onNew() {
@@ -182,7 +189,7 @@ export async function editPage(ctx) {
 
     function onExport() {
         const table = document.querySelector('table');
-        const csv = toCsv(table);
-        download(csv, 'download.csv');
+        const csv = '\uFEFF' + toCsv(table);
+        download(csv, `indications_${new Date().toLocaleString()}.csv`);
     }
 }

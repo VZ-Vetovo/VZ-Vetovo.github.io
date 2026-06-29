@@ -3,7 +3,7 @@ import { html } from "../lib.js";
 window.onload = () => document.querySelector('#visible').style.display = 'block';
 
 const homeTempl = () => html`
-<div>
+<div class="img-box">
     <img class="wrapper" src="images/vilna.jpg">
 </div>`;
 

@@ -2,30 +2,28 @@ import { saveNewIndication, getLastIndication, loader } from "../apiData/data.js
 import { html } from "../lib.js";
 
 const createTempl = (data, onSave) => html`
-<div id="container">
-    <div id="exercise">
-        <h1>Ново Отчитане:</h1>
-        <div class="wrapper">
-            <div class="card-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Потребител</th>
-                                    <th>Тел.№</th>
-                                    <th>Бележка</th>
-                                    <th>Ел.№</th>
-                                    <th>Старо</th>
-                                    <th>Ново</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${Object.values(data.units).map(card)}
-                            </tbody>
-                        </table>
-                        <button @click=${onSave}>Запази Промените</button>
-                    </div>
+<div id="exercise">
+    <div class="wrapper">
+        <div class="card-wrapper">
+            <h1>Ново Отчитане</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Потребител</th>
+                                <th>Тел.№</th>
+                                <th>Бележка</th>
+                                <th>Ел.№</th>
+                                <th>Старо</th>
+                                <th>Ново</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.values(data.units).map(card)}
+                        </tbody>
+                    </table>
+                    <button @click=${onSave}>Запази Промените</button>
                 </div>
             </div>
         </div>

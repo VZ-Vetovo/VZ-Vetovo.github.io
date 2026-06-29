@@ -10,7 +10,7 @@ import { taxPage } from "./views/taxes.js";
 import { archivePage } from "./views/archive.js";
 
 const root = document.querySelector('main');
-const navBtns = document.querySelectorAll('nav div a')
+const navBtns = document.querySelectorAll('nav div a');
 document.querySelector('#logoutBtn').addEventListener('click', onLogout);
 
 page(decorateContext);
@@ -27,6 +27,7 @@ updateNav();
 page.start();
 
 function decorateContext(ctx, next) {
+    setActiveButton(ctx.path);
     ctx.render = (content => render(content, root));
     ctx.updateNav = updateNav;
     next();
@@ -39,6 +40,13 @@ function updateNav() {
     } else {
         [...navBtns].map(b => b.className.includes('guest') ? b.style.display = 'inline-block' : b.style.display = 'none');
     }
+}
+
+function setActiveButton(routePath) {
+    navBtns.forEach(btn => btn.classList.remove('active'));
+    const buttonId = routePath === '/' ? 'home' : routePath.slice(1);
+    const btn = [...navBtns].find(btn => btn.id === buttonId);
+    if (btn) btn.classList.add('active');
 }
 
 function onLogout() {
